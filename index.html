@@ -675,7 +675,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
 </style>
 <script>
 (function(){
-  var P='frpro_',VER='1.0.11';
+  var P='frpro_',VER='1.0.12';
   var TXT='📱 需要安卓APP、Windows电脑端（两个版本更流畅）请添加微信：<b style="color:#ffd76a">Crui8982</b><br>bug反馈功能建议可以发微信号<br>本次更新：优化了多人使用时K线切换的流畅度<br>祝各位发财~';
   try{var box=document.getElementById('gsAnnounceBox');if(box)box.innerHTML='<div style="padding:2px 0">'+TXT+'</div>';}catch(_){}
   try{
@@ -732,7 +732,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
       navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.update()})}).catch(function(){});
     }
   }catch(_){}
-  window.__APP_VER='1.0.11';
+  window.__APP_VER='1.0.12';
   function chkUpd(){
     try{
       fetch('version.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
@@ -832,7 +832,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
       state='downloaded';
       if(go){go.disabled=false;go.textContent='立即安装';}
       if(bw)bw.style.display='none';
-      setBody('下载完成，点击「立即安装」：软件将关闭并自动安装更新。');
+      setBody('下载完成，点击「立即安装」，或直接关闭软件，将自动安装更新。');
     });
     window.desktopAPI.onUpdateError(function(msg){
       state='error';
