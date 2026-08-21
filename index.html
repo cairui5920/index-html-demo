@@ -751,6 +751,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
   btn.onclick=function(){
     show('正在检查…');
     try{
+      if(window.AndroidBridge&&window.AndroidBridge.checkUpdate){show('正在检查…');try{window.AndroidBridge.checkUpdate();}catch(_){}return;}
       if(window.desktopAPI&&window.desktopAPI.checkUpdate){
         window.desktopAPI.checkUpdate().then(function(r){
           if(r&&r.error){show('检查失败，请稍后重试');return;}
