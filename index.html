@@ -754,7 +754,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
       if(window.desktopAPI&&window.desktopAPI.checkUpdate){
         window.desktopAPI.checkUpdate().then(function(r){
           if(r&&r.error){show('检查失败，请稍后重试');return;}
-          if(r&&r.hasUpdate){show('发现新版本 '+r.version+'，已开始后台下载，关闭软件后自动安装',true);}
+          if(r&&r.hasUpdate){show('发现新版本 '+r.version,true);if(window.__showUpdateModal)window.__showUpdateModal(r.version);}
           else{show('已是最新版本');}
         }).catch(function(){show('检查失败，请稍后重试');});
         return;
@@ -771,5 +771,67 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
       }).catch(function(){show('检查失败，请检查网络');});
     }catch(_){show('检查失败，请稍后重试');}
   };
+})();
+</script>
+
+<div id="updModal" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,.55);align-items:center;justify-content:center">
+  <div style="background:#0e2a4a;border:1px solid #2c5f96;border-radius:10px;padding:18px 22px;width:min(380px,90vw);color:#e6f0fb;font-size:13px;box-shadow:0 10px 40px rgba(0,0,0,.5)">
+    <div id="updTitle" style="font-size:15px;font-weight:bold;margin-bottom:10px">🔄 软件更新</div>
+    <div id="updBody" style="line-height:1.7;margin-bottom:12px"></div>
+    <div id="updBarWrap" style="display:none;height:8px;background:#1a3454;border-radius:4px;overflow:hidden;margin-bottom:10px"><div id="updBarFill" style="height:100%;width:0;background:#5ba7ff;transition:width .2s"></div></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button id="updLater" class="btn ka-mini" style="background:#1a3454;color:#c9d4e0">稍后</button>
+      <button id="updGo" class="btn ka-mini" style="background:#2563eb;color:#fff">立即更新</button>
+    </div>
+  </div>
+</div>
+<style>
+  html.theme-light #updModal>div{background:#ffffff;color:#1a2430;border-color:#c9d4e0}
+  html.theme-light #updBarWrap{background:#e3e9f0}
+</style>
+<script>
+(function(){
+  function q(id){return document.getElementById(id)}
+  var modal=q('updModal');
+  if(!modal||!window.desktopAPI)return;   // 仅桌面版
+  var body=q('updBody'),bw=q('updBarWrap'),bf=q('updBarFill'),go=q('updGo'),later=q('updLater');
+  var state='idle';
+  function showModal(){modal.style.display='flex'}
+  function hideModal(){modal.style.display='none'}
+  function setBody(t){if(body)body.textContent=t}
+  window.__showUpdateModal=function(v){
+    state='idle';
+    if(go){go.textContent='立即更新';go.disabled=false;}
+    if(bw)bw.style.display='none'; if(bf)bf.style.width='0';
+    setBody('发现新版本 '+v+'，点击「立即更新」下载并安装。');
+    showModal();
+  };
+  if(later)later.onclick=hideModal;
+  if(go)go.onclick=function(){
+    if(state==='downloaded'){ try{window.desktopAPI.installUpdate()}catch(_){} return; }
+    if(state==='downloading')return;
+    try{window.desktopAPI.downloadUpdate()}catch(_){}
+  };
+  try{
+    window.desktopAPI.onUpdateAvailable(function(v){window.__showUpdateModal(v||'');});
+    window.desktopAPI.onDownloadProgress(function(p){
+      state='downloading';
+      if(go){go.disabled=true;go.textContent='下载中…';}
+      if(bw)bw.style.display='block'; if(bf)bf.style.width=Math.min(100,Math.max(0,p||0))+'%';
+      setBody('正在下载更新 '+Math.round(p||0)+'%');
+    });
+    window.desktopAPI.onUpdateDownloaded(function(){
+      state='downloaded';
+      if(go){go.disabled=false;go.textContent='立即安装';}
+      if(bw)bw.style.display='none';
+      setBody('下载完成，点击「立即安装」：软件将关闭并自动安装更新。');
+    });
+    window.desktopAPI.onUpdateError(function(msg){
+      state='error';
+      if(go){go.disabled=false;go.textContent='重试';}
+      if(bw)bw.style.display='none';
+      setBody('更新失败：'+(msg||'未知错误')+'，点击「重试」再次尝试。');
+    });
+  }catch(_){}
 })();
 </script>
