@@ -623,7 +623,7 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
 <div id="lcRows"></div>
 </div></span><button id="pwChangeLink" class="btn" title="修改访问密码" style="padding:6px 8px;font-size:12px">🔑</button><span id="cdCount" class="muted" style="font-size:12px"></span></div></header><div id="notice" class="notice"></div><div id="copyTip" class="copy-tip"></div><section id="overview" class="overview"></section><section id="bench" class="bench"></section><section class="filters"><input id="search" placeholder="搜索合约，例如 SOL、1000"><button id="onlyAll" class="btn active">全部币种</button><button id="onlyFav" class="btn">仅自选</button><button id="onlyAlert" class="btn">仅提醒</button><span id="metric" class="metric"></span></section><div id="quickTabs" class="quick-tabs"></div><button id="toTop" class="to-top" title="回到顶部">↑</button><details id="watch" class="panel fold watch" open><summary>⭐ 自选列表</summary><div class="fold-body"><div class="caption"><span>本机浏览器保存</span><span class="fav-tools"><label class="fav-chk"><input type="checkbox" id="favCheckAll"> 全选</label><button id="favDelSel" class="btn">删除选中</button><button id="clearFav" class="btn">清空</button></span></div><div id="watchlist" class="watchlist"></div></div></details><details id="allCoins" class="fold" open><summary>📈 山寨币涨幅榜</summary><div class="fold-body"><div class="caption"><span class="muted">批量缩略 K 线 · 点击币种打开 K 线</span><label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;cursor:pointer">显示 <select id="gridCnt"><option value="30">30</option><option value="50">50</option><option value="80">80</option><option value="100">100</option></select> 个币种</label></div><section id="grid" class="grid"></section></div></details><details id="lst-hot" class="fold" open><summary>🔥 热门合约（24h成交额 Top60）</summary><div class="fold-body"><p class="muted" style="font-size:11px;margin:0 0 8px">币安 USDT-M 永续合约 · 按 24 小时成交额从高到低 · 仅 TRADING 正常交易对 · 点击币种打开 K 线</p><section id="hot" class="zones"></section></div></details><details id="lst-tradfi" class="fold" open><summary>🏦 TradFi 永续合约 / 股票 / 期货（24h 涨幅 Top60）</summary><div class="fold-body"><p class="muted" style="font-size:11px;margin:0 0 8px">币安 USDT-M 传统金融永续（黄金/白银/股票/原油等） · 仅 TRADING 正常交易 · 按 24 小时涨幅从高到低 · 点击币种打开 K 线</p><section id="tradfi" class="zones"></section></div></details><details id="lst-all" class="fold" open><summary>⛽ 期货（原油/贵金属/外汇）</summary><div class="fold-body"><p class="muted" style="font-size:11px;margin:0 0 8px">币安传统金融期货（原油/贵金属/外汇等） · 仅 TRADING 正常交易 · 按 24 小时涨幅从高到低 · 点击币种打开 K 线</p><section class="zone-head"><h2>🛢 大宗商品期货（原油/贵金属）</h2><span class="muted" id="allComCount"></span></section><section id="allCom" class="zones"></section><section class="zone-head"><h2>💱 外汇期货</h2><span class="muted" id="allFxCount"></span></section><section id="allFx" class="zones"></section></div></details><details id="lst-scan" class="fold" open><summary>📡 趋势扫描与信号池</summary><div class="fold-body"><section class="zone-head"><h2>📈 15 日上升趋势</h2><span class="muted">15 日价格斜率向上且站上 7 日均线</span></section><section id="trend" class="zones"></section><section class="zone-head"><h2>💡 信号池</h2><span class="muted">流动性靠前、15 日趋势与当日动量同向；仅为筛选信号</span></section><section id="signals" class="zones"></section></div></details><details id="globalSettings" class="panel fold"><summary>⚙ 设置</summary>
 <p id="roleTip" style="display:none;margin:4px 8px 10px;font-size:12px;color:var(--ye)">🔒 普通用户仅可查看，修改设置需要开发者/管理员权限</p>
-<details class="panel fold gs-announce"><summary>📢 公告</summary><div class="fold-body"><div id="gsAnnounceBox" style="font-size:13px;line-height:1.7"></div></div></details> <details class="panel fold gs-network"><summary>🌐 网络模式</summary><div class="fold-body"> <label class="gs-item" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">行情线路 <select id="netModeSel"><option value="auto">自动（推荐）</option><option value="direct">直连币安（需VPN）</option><option value="relay">中继（无需VPN）</option></select></label> <p class="muted" id="netModeTip" style="font-size:11px;margin:4px 0 0"></p> </div></details> <details class="panel fold gs-hist"><summary>📋 历史价格提醒</summary><div class="fold-body"><ul id="histList" class="alert-list"></ul><div class="ka-tools"><label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="histCheckAll"> 全选</label><button id="histDelSel" class="btn ka-mini">删除选中</button><button id="histClearAll" class="btn ka-mini">清空全部</button></div></div></details>
+<details class="panel fold gs-announce"><summary>📢 公告</summary><div class="fold-body"><div id="gsAnnounceBox" style="font-size:13px;line-height:1.7"></div></div></details> <details class="panel fold gs-network"><summary>🌐 网络模式</summary><div class="fold-body"> <label class="gs-item" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">行情线路 <select id="netModeSel"><option value="auto">自动（推荐）</option><option value="direct">直连币安（需VPN）</option><option value="relay">中继（无需VPN）</option></select></label> <p class="muted" id="netModeTip" style="font-size:11px;margin:4px 0 0"></p> </div></details> <details class="panel fold gs-update"><summary>🔄 更新检查</summary><div class="fold-body"> <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"> <button id="chkUpdBtn" class="btn ka-mini">🔍 检查更新</button> <span id="chkUpdRes" class="muted" style="font-size:11px"></span> </div> <p class="muted" style="font-size:11px;margin:6px 0 0">点击检查是否有新版本；有新版会提示刷新 / 自动下载安装</p> </div></details> <details class="panel fold gs-hist"><summary>📋 历史价格提醒</summary><div class="fold-body"><ul id="histList" class="alert-list"></ul><div class="ka-tools"><label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" id="histCheckAll"> 全选</label><button id="histDelSel" class="btn ka-mini">删除选中</button><button id="histClearAll" class="btn ka-mini">清空全部</button></div></div></details>
 <details class="panel fold gs-remind"><summary>🔔 提醒音效弹窗全局设置</summary><div class="fold-body">
 <label class="gs-item" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;margin-right:20px"><input type="checkbox" id="setNotify"> 页面提醒弹窗</label><label class="gs-item" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;margin-right:20px"><input type="checkbox" id="setDesk"> 桌面提醒弹窗</label>
 <label class="gs-item" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;margin-right:20px"><input type="checkbox" id="setSound"> 提醒音效</label>
@@ -740,5 +740,36 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
   }
   chkUpd();
   setInterval(chkUpd,30*60*1000);
+})();
+</script>
+
+<script>
+(function(){
+  var btn=document.getElementById('chkUpdBtn'),res=document.getElementById('chkUpdRes');
+  if(!btn)return;
+  function show(txt,isNew){ if(res){res.textContent=txt;res.style.color=isNew?'#ffd76a':''} }
+  btn.onclick=function(){
+    show('正在检查…');
+    try{
+      if(window.desktopAPI&&window.desktopAPI.checkUpdate){
+        window.desktopAPI.checkUpdate().then(function(r){
+          if(r&&r.error){show('检查失败，请稍后重试');return;}
+          if(r&&r.hasUpdate){show('发现新版本 '+r.version+'，已开始后台下载，关闭软件后自动安装',true);}
+          else{show('已是最新版本');}
+        }).catch(function(){show('检查失败，请稍后重试');});
+        return;
+      }
+    }catch(_){}
+    try{
+      fetch('version.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+        var mine=window.__APP_VER||'';
+        if(j&&j.version&&mine&&j.version!==mine){
+          show('发现新版本 '+j.version+'，已显示刷新提示',true);
+          var b=document.getElementById('updBar');
+          if(b){b.style.display='block';b.onclick=function(){try{location.reload()}catch(_){}};}
+        }else{show('已是最新版本');}
+      }).catch(function(){show('检查失败，请检查网络');});
+    }catch(_){show('检查失败，请稍后重试');}
+  };
 })();
 </script>
