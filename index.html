@@ -663,6 +663,11 @@ main>details.fold>summary,main>details.panel.fold>summary{font-size:14px !import
 .imp-t{color:#ffd76a;font-weight:700}
 .n-full{display:none;margin-top:4px;border-top:1px dashed var(--bd);padding-top:4px;color:var(--tx);white-space:pre-wrap}
 .n-item.open .n-full{display:block}
+html.mode-mobile .brand .muted{display:none}
+html.mode-mobile .brand{font-size:14px}
+html.mode-mobile .top{flex-direction:column;align-items:stretch;gap:8px}
+html.mode-mobile .top-left{width:100%;justify-content:space-between;gap:6px}
+html.mode-mobile .row{width:100%;justify-content:space-between;gap:5px}
 html.mode-mobile .news-panel{padding:6px}
 html.mode-mobile .news-head{flex-direction:column;align-items:stretch;margin:0 0 6px}
 html.mode-mobile .n-chip{padding:3px 8px;font-size:11px;min-height:24px}
@@ -671,14 +676,17 @@ html.mode-mobile .news-tools{justify-content:space-between;font-size:11px;gap:5p
 html.mode-mobile .n-item{padding:6px 8px;font-size:12px}
 html.mode-mobile .news-list{gap:4px}
 html.mode-mobile .n-item .n-meta{font-size:9px;margin-bottom:2px}
-.n-chip-more{display:none}
-.n-chip-more.show{display:inline-block}
+.news-more{display:none;gap:5px;flex-wrap:wrap;margin-top:5px}
+.news-more.show{display:flex}
+html:not(.mode-mobile) #newsMoreWrap{display:contents}
+html:not(.mode-mobile) #newsMore{display:none}
+html.mode-mobile .news-more.show{display:flex;flex:1 0 100%;flex-direction:column;align-items:flex-start}
 .n-more{color:var(--mu)}
 </style>
 <button id="newsToggle" class="btn n-toggle" type="button">📰 消息面 ▾</button></div>
 <div id="newsPanel" class="news-panel" style="display:none">
 <div class="news-head">
-<div class="news-chips"><button class="n-chip active" data-cat="all">全部</button><button class="n-chip" data-cat="fed"><i class="cd" style="background:#14b8a6"></i>美联储</button><button class="n-chip" data-cat="us"><i class="cd" style="background:#3b82f6"></i>美股</button><button class="n-chip" data-cat="gold"><i class="cd" style="background:#fde047"></i>黄金</button><button class="n-chip" data-cat="oil"><i class="cd" style="background:#8b5cf6"></i>原油</button><button class="n-chip n-chip-more" data-cat="crypto"><i class="cd" style="background:#f7931a"></i>币圈</button><button class="n-chip n-chip-more" data-cat="kr"><i class="cd" style="background:#e11d48"></i>韩股</button><button class="n-chip n-chip-more" data-cat="trump"><i class="cd" style="background:#ec4899"></i>特朗普</button><button class="n-chip n-chip-more" data-cat="macro"><i class="cd" style="background:#22c55e"></i>宏观</button><button id="newsMore" class="n-chip n-more" type="button">更多 ▾</button></div>
+<div class="news-chips"><button class="n-chip active" data-cat="all">全部</button><button class="n-chip" data-cat="fed"><i class="cd" style="background:#14b8a6"></i>美联储</button><button class="n-chip" data-cat="us"><i class="cd" style="background:#3b82f6"></i>美股</button><button class="n-chip" data-cat="gold"><i class="cd" style="background:#fde047"></i>黄金</button><button class="n-chip" data-cat="oil"><i class="cd" style="background:#8b5cf6"></i>原油</button><button id="newsMore" class="n-chip n-more" type="button">更多 ▾</button><div id="newsMoreWrap" class="news-more"><button class="n-chip" data-cat="crypto"><i class="cd" style="background:#f7931a"></i>币圈</button><button class="n-chip" data-cat="kr"><i class="cd" style="background:#e11d48"></i>韩股</button><button class="n-chip" data-cat="trump"><i class="cd" style="background:#ec4899"></i>特朗普</button><button class="n-chip" data-cat="macro"><i class="cd" style="background:#22c55e"></i>宏观</button></div></div>
 <div class="news-tools"><label>刷新 <select id="newsIntv"><option value="5">5秒</option><option value="10">10秒</option><option value="30" selected>30秒</option><option value="60">1分钟</option><option value="180">3分钟</option><option value="300">5分钟</option><option value="600">10分钟</option></select></label><span class="n-mode"><button id="newsModeAI" class="n-mode-btn active" type="button">AI精简</button><button id="newsModeFull" class="n-mode-btn" type="button">完整消息</button></span><button id="newsRefresh" class="btn ka-mini" title="刷新消息面">🔄</button><span id="newsTime" class="muted" style="font-size:10px"></span></div>
 </div>
 <div id="newsList" class="news-list"><p class="muted" style="font-size:12px">加载中…</p></div>
@@ -1036,7 +1044,7 @@ html.mode-mobile .n-item .n-meta{font-size:9px;margin-bottom:2px}
     var tg=document.getElementById('newsToggle');
     if(tg)tg.onclick=function(){state.open=!state.open;var p=document.getElementById('newsPanel');if(p)p.style.display=state.open?'':'none';tg.classList.toggle('on',state.open);tg.textContent=state.open?'📰 消息面 ▴':'📰 消息面 ▾';if(state.open)fetchNews(false)};
     var list=document.getElementById('newsList');if(list)list.onclick=function(e){var it=e.target.closest('.n-item');if(!it)return;it.classList.toggle('open')};
-    var more=document.getElementById('newsMore');if(more)more.onclick=function(){var ms=document.querySelectorAll('#newsPanel .n-chip-more');var on=ms.length&&ms[0].classList.contains('show');ms.forEach(function(x){x.classList.toggle('show',!on)});more.textContent=on?'更多 ▾':'收起 ▴'};var chips=document.querySelectorAll('#newsPanel .n-chip:not(.n-more)');
+    var more=document.getElementById('newsMore');if(more)more.onclick=function(){var w=document.getElementById('newsMoreWrap');if(!w)return;var on=w.classList.contains('show');w.classList.toggle('show',!on);more.textContent=on?'更多 ▾':'收起 ▴'};var chips=document.querySelectorAll('#newsPanel .n-chip:not(.n-more)');
     chips.forEach(function(b){b.onclick=function(){state.cat=b.getAttribute('data-cat');chips.forEach(function(x){x.classList.toggle('active',x===b)});render()}});
     var ma=document.getElementById('newsModeAI'),mf=document.getElementById('newsModeFull');function setMode(m){state.mode=m;if(ma)ma.classList.toggle('active',m==='ai');if(mf)mf.classList.toggle('active',m==='full');render()}if(ma)ma.onclick=function(){setMode('ai')};if(mf)mf.onclick=function(){setMode('full')};
     var r=document.getElementById('newsRefresh');if(r)r.onclick=function(){fetchNews(true)};
