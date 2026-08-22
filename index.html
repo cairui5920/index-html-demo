@@ -1034,11 +1034,32 @@ html.mode-mobile .news-more.show{display:flex;flex:1 0 100%;flex-direction:colum
       var cs=classify(x.content);
       var tags=cs.map(function(k){var c=CATS.find(function(z){return z.k===k});return '<span class="n-tag" style="background:'+(c?c.c:'#888')+'">'+(c?c.l:k)+'</span>'}).join('');
       var imp=x.important?'<span class="n-imp">重要</span>':'';
-      var sum=state.mode==='full'?cleanHtml(x.content):cleanHtml(condense(x.content));
+      var sum=state.mode==='full'?cleanHtml(x.content):(x.ai?esc(x.ai):cleanHtml(condense(x.content)));
       var full=cleanHtml(x.content);
       return '<div class="n-item'+(x.important?' imp':'')+'" data-id="'+esc(x.id)+'"><div class="n-meta"><span>'+fmtT(x.time)+'</span>'+tags+imp+'</div><div class="n-sum">'+sum+'</div>'+(state.mode==='full'?'':'<div class="n-full">'+full+'</div>')+'</div>';
     }).join('');
     var t=document.getElementById('newsTime');if(t)t.textContent=vis.length+'条 · '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+    requestAI();
+  }
+  var AI_API='https://nyfscgaytzgowisueerh.supabase.co/functions/v1/binance-proxy/news-ai';
+  var aiQueue=[],aiBusy=false;
+  function pumpAI(){
+    if(aiBusy||!aiQueue.length)return;
+    aiBusy=true;
+    var it=aiQueue.shift();
+    fetch(AI_API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({id:it.id,content:it.content}),signal:AbortSignal.timeout(25000)})
+      .then(function(r){return r.json()})
+      .then(function(j){it.ai=(j&&j.summary)||'';saveCache(state.items);var el=document.querySelector('#newsList .n-item[data-id="'+esc(it.id)+'"] .n-sum');if(el&&state.mode==='ai'&&it.ai)el.innerHTML=esc(it.ai)})
+      .catch(function(){it.ai=''})
+      .finally(function(){aiBusy=false;setTimeout(pumpAI,200)});
+  }
+  function requestAI(){
+    try{
+      var seen={};
+      aiQueue=aiQueue.filter(function(x){return x&&!seen[x.id]&&(seen[x.id]=1)});
+      norm().forEach(function(x){if(x.ai===undefined&&x.content&&!seen[x.id]&&aiQueue.length<40){aiQueue.push(x);seen[x.id]=1}});
+      pumpAI();
+    }catch(_){}
   }
   function bind(){
     var tg=document.getElementById('newsToggle');
