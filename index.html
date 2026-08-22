@@ -1079,7 +1079,7 @@ html.mode-mobile .news-more.show{display:flex;flex:1 0 100%;flex-direction:colum
     fetch(API,{signal:AbortSignal.timeout(12000)}).then(function(r){return r.json()}).then(function(j){
       var arr=(j&&j.data)||[];
       var map={};state.items.forEach(function(x){map[x.id]=x});
-      arr.forEach(function(x){if(x&&x.id)map[x.id]=x});
+      arr.forEach(function(x){if(x&&x.id&&!map[x.id])map[x.id]=x});
       state.items=Object.keys(map).map(function(k){return map[k]});
       saveCache(state.items);if(state.open||manual)render();
     }).catch(function(){
